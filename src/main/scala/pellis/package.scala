@@ -2,6 +2,7 @@ package object pellis {
 
   type ExchangeRate = Map[String, Double]
   type GalaxyCypher = Map[String, String]
-  type RomanCypher = List[(String, Int)]
+  type RomanToIntCypher = List[(String, Int)]
+  type IntToRomanCypher = List[(Int, String)]
 
 }

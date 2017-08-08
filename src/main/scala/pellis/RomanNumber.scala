@@ -1,10 +1,13 @@
 package pellis
 
+import scala.util.{Failure, Success, Try}
+import scala.language.postfixOps
+
 object RomanNumber {
 
   private val romanNumberRegEx = """^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$"""
 
-  private val romanCypher: RomanCypher = List(
+  private val romanCypher: RomanToIntCypher = List(
     "M" -> 1000,
     "CM" -> 900,
     "D" -> 500,
@@ -19,7 +22,32 @@ object RomanNumber {
     "IV" -> 4,
     "I" -> 1)
 
+  private lazy val intCypher: IntToRomanCypher = romanCypher.map(_ swap)
+
   def validate(romanNumber: String): Boolean = romanNumber.matches(romanNumberRegEx)
+
+  def fromInt(number: Int): String = number match {
+    case nonPositive if nonPositive <= 0 =>
+      throw new NumberFormatException(s"Is not possible convert $number in roman number")
+    case positive => Try(fromInt(positive, "", intCypher)) match {
+      case Success(romanNumber) => romanNumber
+      case Failure(_) => throw new NumberFormatException(s"Is not possible convert $number in roman number")
+    }
+  }
+
+  private def fromInt(arabicNumber: Int, romanNumber: String, cypher: IntToRomanCypher): String = {
+    if (cypher.isEmpty) {
+      if (arabicNumber == 0) return romanNumber
+
+      throw new NumberFormatException(s"$romanNumber is not a valid roman number")
+    }
+
+    val repetition = arabicNumber / cypher.head._1
+    fromInt(
+      arabicNumber - (cypher.head._1 * repetition),
+      s"$romanNumber${cypher.head._2 * repetition}",
+      cypher.tail)
+  }
 
   def toInt(romanNumber: String): Int = {
     if (validate(romanNumber))
@@ -28,11 +56,11 @@ object RomanNumber {
       throw new NumberFormatException(s"$romanNumber is not a valid roman number")
   }
 
-  private def toInt(arabicNumber: Int, romanNumber: String, cipher: RomanCypher): Int = {
+  private def toInt(arabicNumber: Int, romanNumber: String, cypher: RomanToIntCypher): Int = {
     if (romanNumber.isEmpty) return arabicNumber
-    if (romanNumber.startsWith(cipher.head._1))
-      toInt(arabicNumber + cipher.head._2, romanNumber.substring(cipher.head._1.length), cipher)
+    if (romanNumber.startsWith(cypher.head._1))
+      toInt(arabicNumber + cypher.head._2, romanNumber.substring(cypher.head._1.length), cypher)
     else
-      toInt(arabicNumber, romanNumber, cipher.tail)
+      toInt(arabicNumber, romanNumber, cypher.tail)
   }
 }

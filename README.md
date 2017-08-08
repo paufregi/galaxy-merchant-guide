@@ -68,7 +68,8 @@ I have no idea what you are talking about
 * 'Question' lines always produce output
 always produce an error message as output
 * An intergalactic number can represent only one roman symbol
-* A roman symbol can be represented only by one intergalactic number  
+* A roman symbol can be represented only by one intergalactic number
+* Only positive number can be converted in roman
 
 ## Requirements
 
