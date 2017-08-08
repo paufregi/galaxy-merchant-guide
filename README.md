@@ -69,7 +69,7 @@ I have no idea what you are talking about
     * setup an intergalactic currency conversion - `ie: glob glob Silver is 34 Credits`
     * ask for a number conversion - `ie: how much is pish tegj glob glob ?`
     * ask for a currency conversion - `ie: how many Credits is glob prok Silver ?`
-    * ask for a metal conversion - `ie: how many Silber is glob Gold ?`
+    * ask for a metal conversion - `ie: how many Silver is glob Gold ?`
 * 'Setup' lines never produce output (in case of error the line is simply skipped)
 * 'Question' lines always produce output  
 * An intergalactic number can represent only one roman symbol
