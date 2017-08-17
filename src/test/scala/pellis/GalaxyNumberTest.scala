@@ -5,10 +5,10 @@ import org.scalatest.{Matchers, WordSpec}
 class GalaxyNumberTest extends WordSpec with Matchers {
 
   val cipher: GalaxyCypher = Map(
-    "glob" -> "I",
-    "prok" -> "V",
-    "pish" -> "X",
-    "tegj" -> "L"
+    "glob" → "I",
+    "prok" → "V",
+    "pish" → "X",
+    "tegj" → "L"
   )
 
   "#toInt" should {

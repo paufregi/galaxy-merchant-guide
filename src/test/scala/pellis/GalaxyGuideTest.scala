@@ -73,37 +73,37 @@ class GalaxyGuideTest extends WordSpec with Matchers {
 
   "#learnGalaxyConversion" should {
     "return the cypher with a new entry" in {
-      val cypher = Map("glob" -> "I", "prok" -> "V")
+      val cypher = Map("glob" → "I", "prok" → "V")
       val input: String = "pish is X"
 
-      val expected = Map("glob" -> "I", "prok" -> "V", "pish" -> "X")
+      val expected = Map("glob" → "I", "prok" → "V", "pish" → "X")
 
       GalaxyGuide.learnRoman(cypher, input) shouldBe expected
     }
 
     "override conversion with the newest version" in {
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X")
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X")
       val input: String = "prok is I"
 
-      val expected = Map("prok" -> "I", "pish" -> "X")
+      val expected = Map("prok" → "I", "pish" → "X")
 
       GalaxyGuide.learnRoman(cypher, input) shouldBe expected
     }
 
     "return the cypher untouched if the input is invalid" in {
-      val cypher = Map("glob" -> "I", "prok" -> "V")
+      val cypher = Map("glob" → "I", "prok" → "V")
       val input: String = "invalid input"
 
-      val expected = Map("glob" -> "I", "prok" -> "V")
+      val expected = Map("glob" → "I", "prok" → "V")
 
       GalaxyGuide.learnRoman(cypher, input) shouldBe expected
     }
 
     "return the cypher untouched if the roman number is invalid" in {
-      val cypher = Map("glob" -> "I", "prok" -> "V")
+      val cypher = Map("glob" → "I", "prok" → "V")
       val input: String = "pish is A"
 
-      val expected = Map("glob" -> "I", "prok" -> "V")
+      val expected = Map("glob" → "I", "prok" → "V")
 
       GalaxyGuide.learnRoman(cypher, input) shouldBe expected
     }
@@ -111,41 +111,41 @@ class GalaxyGuideTest extends WordSpec with Matchers {
 
   "#learnExchangeRate" should {
     "return the exchange rate collection with a new entry" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 14450d)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 14450d)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "pish pish Iron is 3910 Credits"
-      val expected = Map("silver" -> 17d, "gold" -> 14450d, "iron" -> 195.5)
+      val expected = Map("silver" → 17d, "gold" → 14450d, "iron" → 195.5)
 
       GalaxyGuide.learnExchangeRate(exchangeRate, cypher, input) shouldBe expected
     }
 
     "override exchange rate whit the newest version" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 14450d)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 14450d)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "pish pish Gold is 3910 Credits"
-      val expected = Map("silver" -> 17d, "gold" -> 195.5)
+      val expected = Map("silver" → 17d, "gold" → 195.5)
 
       GalaxyGuide.learnExchangeRate(exchangeRate, cypher, input) shouldBe expected
     }
 
     "return the cypher untouched if the input is invalid" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 14450d)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 14450d)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "invalid input"
-      val expected = Map("silver" -> 17d, "gold" -> 14450d)
+      val expected = Map("silver" → 17d, "gold" → 14450d)
 
       GalaxyGuide.learnExchangeRate(exchangeRate, cypher, input) shouldBe expected
     }
 
     "return the cypher untouched if the number is invalid" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 14450d)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 14450d)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "pish glob tegj Gold is 3910 Credits"
-      val expected = Map("silver" -> 17d, "gold" -> 14450d)
+      val expected = Map("silver" → 17d, "gold" → 14450d)
 
       GalaxyGuide.learnExchangeRate(exchangeRate, cypher, input) shouldBe expected
     }
@@ -153,7 +153,7 @@ class GalaxyGuideTest extends WordSpec with Matchers {
 
   "#answerHowMuch" should {
     "return the correct answer" in {
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "how much is pish tegj glob glob ?"
       val expected = "pish tegj glob glob is 42"
@@ -162,7 +162,7 @@ class GalaxyGuideTest extends WordSpec with Matchers {
     }
 
     "return an error message if the input is invalid" in {
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "invalid input ?"
       val expected = "I have no idea what you are talking about"
@@ -171,7 +171,7 @@ class GalaxyGuideTest extends WordSpec with Matchers {
     }
 
     "return an error message if the number is invalid" in {
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "how much is tegj pish tegj glob glob ?"
       val expected = "Sorry, tegj pish tegj glob glob is not a number"
@@ -182,8 +182,8 @@ class GalaxyGuideTest extends WordSpec with Matchers {
 
   "#answerHowManyCredits" should {
     "return the correct answer" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 14450d, "iron" -> 195.5)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 14450d, "iron" → 195.5)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "how many Credits is glob prok Silver ?"
       val expected = "glob prok Silver is 68 Credits"
@@ -192,8 +192,8 @@ class GalaxyGuideTest extends WordSpec with Matchers {
     }
 
     "return an error message if the input is invalid" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 14450d, "iron" -> 195.5)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 14450d, "iron" → 195.5)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "invalid input ?"
       val expected = "I have no idea what you are talking about"
@@ -202,8 +202,8 @@ class GalaxyGuideTest extends WordSpec with Matchers {
     }
 
     "return an error message if the currency is invalid" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 14450d, "iron" -> 195.5)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 14450d, "iron" → 195.5)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "how many Credits is glob prok Jade ?"
       val expected = "Sorry, can't convert glob prok Jade in Credits"
@@ -212,8 +212,8 @@ class GalaxyGuideTest extends WordSpec with Matchers {
     }
 
     "return an error message if the number is invalid" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 14450d, "iron" -> 195.5)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 14450d, "iron" → 195.5)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "how many Credits is glob prok tegj Silver ?"
       val expected = "Sorry, can't convert glob prok tegj Silver in Credits"
@@ -224,8 +224,8 @@ class GalaxyGuideTest extends WordSpec with Matchers {
 
   "#answerHowManyMetails" should {
     "return the correct answer" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 1445d, "iron" -> 195.5)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 1445d, "iron" → 195.5)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "how many Silver is glob Gold ?"
       val expected = "glob Gold is tegj pish pish pish prok Silver"
@@ -234,8 +234,8 @@ class GalaxyGuideTest extends WordSpec with Matchers {
     }
 
     "return the correct answer (zero in conversion)" in {
-      val exchangeRate = Map("silver" -> 1445d, "gold" -> 17d, "iron" -> 195.5)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 1445d, "gold" → 17d, "iron" → 195.5)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "how many Silver is glob Gold ?"
       val expected = "glob Gold is no Silver"
@@ -244,8 +244,8 @@ class GalaxyGuideTest extends WordSpec with Matchers {
     }
 
     "return an error message if the input is invalid" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 1445d, "iron" -> 195.5)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 1445d, "iron" → 195.5)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "invalid input ?"
       val expected = "I have no idea what you are talking about"
@@ -254,8 +254,8 @@ class GalaxyGuideTest extends WordSpec with Matchers {
     }
 
     "return an error message if `metal to` is invalid" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 1445d, "iron" -> 195.5)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 1445d, "iron" → 195.5)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "how many Jade is glob Gold ?"
       val expected = "Sorry, can't convert glob Gold in Jade"
@@ -264,8 +264,8 @@ class GalaxyGuideTest extends WordSpec with Matchers {
     }
 
     "return an error message if `metal from` is invalid" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 1445d, "iron" -> 195.5)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 1445d, "iron" → 195.5)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "how many Silver is glob Jade ?"
       val expected = "Sorry, can't convert glob Jade in Silver"
@@ -274,8 +274,8 @@ class GalaxyGuideTest extends WordSpec with Matchers {
     }
 
     "return an error message if the number is invalid" in {
-      val exchangeRate = Map("silver" -> 17d, "gold" -> 1445d, "iron" -> 195.5)
-      val cypher = Map("glob" -> "I", "prok" -> "V", "pish" -> "X", "tegj" -> "L")
+      val exchangeRate = Map("silver" → 17d, "gold" → 1445d, "iron" → 195.5)
+      val cypher = Map("glob" → "I", "prok" → "V", "pish" → "X", "tegj" → "L")
 
       val input = "how many Silver is glob prok tegj Gold ?"
       val expected = "Sorry, can't convert glob prok tegj Gold in Silver"
