@@ -1,8 +1,11 @@
-package pellis
+package pellis.converter
 
+import org.scalamock.scalatest.MockFactory
 import org.scalatest.{Matchers, WordSpec}
+import pellis.converter.impl.BasicGalaxyNumber
+import pellis.model.GalaxyCypher
 
-class GalaxyNumberTest extends WordSpec with Matchers {
+class BasicGalaxyNumberTest extends WordSpec with Matchers with MockFactory {
 
   val cipher: GalaxyCypher = Map(
     "glob" → "I",
@@ -11,26 +14,33 @@ class GalaxyNumberTest extends WordSpec with Matchers {
     "tegj" → "L"
   )
 
+  val fakeRomanConverter: RomanNumber =  mock[RomanNumber]
+  val converter: GalaxyNumber = new BasicGalaxyNumber(fakeRomanConverter)
+
   "#toInt" should {
     "convert `tegj pish pish pish prok glob glob glob` into 88" in {
       val input = "tegj pish pish pish prok glob glob glob"
 
-      GalaxyNumber.toInt(input, cipher) shouldBe 88
+      (fakeRomanConverter.toInt _).expects("LXXXVIII").returning(88)
+
+      converter.toInt(input, cipher) shouldBe 88
     }
 
     "throw a NumberFormatException for not valid input" in {
       val input = "tegj wrong glob"
 
       assertThrows[NumberFormatException] {
-        GalaxyNumber.toInt(input, cipher)
+        converter.toInt(input, cipher)
       }
     }
 
     "throw a NumberFormatException if the input doesn't represent a valid roman number" in {
       val input = "tegj tegj tegj tegj pish glob"
 
+      (fakeRomanConverter.toInt _).expects(*).throws(new NumberFormatException)
+
       assertThrows[NumberFormatException] {
-        GalaxyNumber.toInt(input, cipher)
+        converter.toInt(input, cipher)
       }
     }
   }
@@ -39,14 +49,19 @@ class GalaxyNumberTest extends WordSpec with Matchers {
     "convert 88 into `tegj pish pish pish prok glob glob glob`" in {
       val input = 88
 
-      GalaxyNumber.fromInt(input, cipher) shouldBe "tegj pish pish pish prok glob glob glob"
+      (fakeRomanConverter.fromInt _).expects(88).returning("LXXXVIII")
+      (fakeRomanConverter.validate _).expects("LXXXVIII").returning(true)
+
+      converter.fromInt(input, cipher) shouldBe "tegj pish pish pish prok glob glob glob"
     }
 
     "throw a NumberFormatException for not valid input" in {
       val input = -1
 
+      (fakeRomanConverter.fromInt _).expects(-1).throwing(new NumberFormatException)
+
       assertThrows[NumberFormatException] {
-        GalaxyNumber.fromInt(input, cipher)
+        converter.fromInt(input, cipher)
       }
     }
   }
@@ -55,22 +70,14 @@ class GalaxyNumberTest extends WordSpec with Matchers {
     "convert `tegj pish pish pish prok glob glob glob` into `LXXXVIII`" in {
       val input = "tegj pish pish pish prok glob glob glob"
 
-      GalaxyNumber.toRoman(input, cipher) shouldBe "LXXXVIII"
+      converter.toRoman(input, cipher) shouldBe "LXXXVIII"
     }
 
     "throw a NumberFormatException for not valid input" in {
       val input = "tegj wrong glob"
 
       assertThrows[NumberFormatException] {
-        GalaxyNumber.toInt(input, cipher)
-      }
-    }
-
-    "throw a NumberFormatException if the input doesn't represent a valid roman number" in {
-      val input = "tegj tegj tegj tegj pish glob"
-
-      assertThrows[NumberFormatException] {
-        GalaxyNumber.toInt(input, cipher)
+        converter.toRoman(input, cipher)
       }
     }
   }
@@ -79,22 +86,28 @@ class GalaxyNumberTest extends WordSpec with Matchers {
     "convert `LXXXVIII` into `tegj pish pish pish prok glob glob glob`" in {
       val input = "LXXXVIII"
 
-      GalaxyNumber.fromRoman(input, cipher) shouldBe "tegj pish pish pish prok glob glob glob"
+      (fakeRomanConverter.validate _).expects("LXXXVIII").returning(true)
+
+      converter.fromRoman(input, cipher) shouldBe "tegj pish pish pish prok glob glob glob"
     }
 
     "throw a NumberFormatException if the conversion is not possible" in {
       val input = "C"
 
+      (fakeRomanConverter.validate _).expects("C").returning(true)
+
       assertThrows[NumberFormatException] {
-        GalaxyNumber.fromRoman(input, cipher)
+        converter.fromRoman(input, cipher)
       }
     }
 
     "throw a NumberFormatException if the input doesn't represent a valid roman number" in {
       val input = "MCMDCDCXCLXLXIXVIVI"
 
+      (fakeRomanConverter.validate _).expects("MCMDCDCXCLXLXIXVIVI").returning(false)
+
       assertThrows[NumberFormatException] {
-        GalaxyNumber.fromRoman(input, cipher)
+        converter.fromRoman(input, cipher)
       }
     }
   }

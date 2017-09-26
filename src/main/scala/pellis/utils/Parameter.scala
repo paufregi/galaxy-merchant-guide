@@ -1,4 +1,4 @@
-package pellis
+package pellis.utils
 
 import scopt.OptionParser
 

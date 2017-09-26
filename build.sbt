@@ -11,4 +11,5 @@ lazy val root = (project in file("."))
     assemblyJarName in assembly := "galaxy-merchant-guide.jar"
   )
   .settings(libraryDependencies += "com.github.scopt" %% "scopt" % "3.6.0")
-  .settings(libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test")
+  .settings(libraryDependencies += "org.scalatest" %% "scalatest" % "3.0.1" % "test,it")
+  .settings(libraryDependencies += "org.scalamock" %% "scalamock-scalatest-support" % "3.6.0" % "test,it")

@@ -1,9 +1,12 @@
-package pellis
+package pellis.converter.impl
 
-import scala.util.{Failure, Success, Try}
+import pellis.converter.RomanNumber
+import pellis.model.{IntToRomanCypher, RomanToIntCypher}
+
 import scala.language.postfixOps
+import scala.util.{Failure, Success, Try}
 
-object RomanNumber {
+class BasicRomanNumber extends RomanNumber{
 
   private val romanNumberRegEx = """^M{0,3}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})$"""
 
@@ -24,9 +27,9 @@ object RomanNumber {
 
   private lazy val intCypher: IntToRomanCypher = romanCypher.map(_ swap)
 
-  def validate(romanNumber: String): Boolean = romanNumber.matches(romanNumberRegEx)
+  override def validate(romanNumber: String): Boolean = romanNumber.matches(romanNumberRegEx)
 
-  def fromInt(number: Int): String = number match {
+  override def fromInt(number: Int): String = number match {
     case nonPositive if nonPositive <= 0 =>
       throw new NumberFormatException(s"Is not possible convert $number in roman number")
     case positive => Try(fromInt(positive, "", intCypher)) match {
@@ -49,7 +52,7 @@ object RomanNumber {
       cypher.tail)
   }
 
-  def toInt(romanNumber: String): Int = {
+  override def toInt(romanNumber: String): Int = {
     if (validate(romanNumber))
       toInt(0, romanNumber, romanCypher)
     else

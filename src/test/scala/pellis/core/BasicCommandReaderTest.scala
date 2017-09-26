@@ -1,15 +1,18 @@
-package pellis
+package pellis.core
 
 import org.scalatest.{Matchers, WordSpec}
-import pellis.Command._
+import pellis.core.impl.BasicCommandReader
+import pellis.model.Command._
 
-class CommandReaderTest extends WordSpec with Matchers {
+class BasicCommandReaderTest extends WordSpec with Matchers {
+
+  val reader: CommandReader = BasicCommandReader
 
   "#read" should {
     "return a `LearnGalaxyRomanConversion` instance" in {
       val input = "glob is I"
 
-      val result = CommandReader.read(input)
+      val result = reader.translate(input)
 
       result shouldBe LearnGalaxyRomanConversion("glob", "I")
     }
@@ -17,15 +20,15 @@ class CommandReaderTest extends WordSpec with Matchers {
     "return a `LearnMetalCost` instance" in {
       val input = "glob glob Silver is 34 Credits"
 
-      val result = CommandReader.read(input)
+      val result = reader.translate(input)
 
-      result shouldBe LearnMetalCost("silver", "glob glob", 34d)
+      result shouldBe LearnMetalCost("glob glob", "silver", 34d)
     }
 
     "return a `QuestionHowMuch` instance" in {
       val input = "how much is pish tegj glob glob ?"
 
-      val result = CommandReader.read(input)
+      val result = reader.translate(input)
 
       result shouldBe QuestionHowMuch("pish tegj glob glob")
     }
@@ -33,7 +36,7 @@ class CommandReaderTest extends WordSpec with Matchers {
     "return a `QuestionHowManyCredits` instance" in {
       val input = "how many Credits is glob prok Silver ?"
 
-      val result = CommandReader.read(input)
+      val result = reader.translate(input)
 
       result shouldBe QuestionHowManyCredits("glob prok", "silver")
     }
@@ -41,7 +44,7 @@ class CommandReaderTest extends WordSpec with Matchers {
     "return a `QuestionHowManyMetals` instance" in {
       val input = "how many Silver is glob Gold ?"
 
-      val result = CommandReader.read(input)
+      val result = reader.translate(input)
 
       result shouldBe QuestionHowManyMetals("glob", "gold", "silver")
     }
@@ -49,7 +52,7 @@ class CommandReaderTest extends WordSpec with Matchers {
     "return a `Empty` object" in {
       val input = ""
 
-      val result = CommandReader.read(input)
+      val result = reader.translate(input)
 
       result shouldBe Empty
     }
@@ -57,7 +60,7 @@ class CommandReaderTest extends WordSpec with Matchers {
     "return a `UnknownCommand` instance" in {
       val input = "how much wood could a woodchuck chuck if a woodchuck could chuck wood ?"
 
-      val result = CommandReader.read(input)
+      val result = reader.translate(input)
 
       result shouldBe Unknown
     }
